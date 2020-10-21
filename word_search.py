@@ -1,4 +1,5 @@
 import re
+import os
 import sys
 
 from exceptions import InputError
@@ -8,7 +9,7 @@ class WordSearchPuzzle(object):
     def __init__(self, input_file):
         self.find_words = []
         self.grid = []
-        self.filename = input_file.split('.')[0]
+        self.filename = os.path.basename(input_file).split('.')[0]
 
         self.setup_puzzle(input_file)
 

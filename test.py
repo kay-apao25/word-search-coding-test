@@ -4,9 +4,12 @@ from word_search import WordSearchPuzzle
 from exceptions import InputError
 
 
+test_dir = 'test_files/'
+import sys
+
 class TestWordSearchPuzzle(unittest.TestCase):
     def general_check_file_contents_test(self, filename):
-        puzzle = WordSearchPuzzle('{}.pzl'.format(filename))
+        puzzle = WordSearchPuzzle('{}{}.pzl'.format(test_dir, filename))
         output = puzzle.search()
 
         f = open('{}.output'.format(filename), "r")
@@ -59,8 +62,8 @@ class TestWordSearchPuzzle(unittest.TestCase):
 
     def test_no_words_or_grid_provided(self):
         with self.assertRaises(ValueError) as err:
-            WordSearchPuzzle('noGrid.pzl')
-            WordSearchPuzzle('noWords.pzl')
+            WordSearchPuzzle(test_dir+'noGrid.pzl')
+            WordSearchPuzzle(test_dir+'noWords.pzl')
         self.assertEqual(
             'No grid or words to search',
             str(err.exception)
@@ -68,11 +71,11 @@ class TestWordSearchPuzzle(unittest.TestCase):
 
     def test_file_not_found(self):
         with self.assertRaises(FileNotFoundError):
-            WordSearchPuzzle('does-not-exist.pzl')
+            WordSearchPuzzle(test_dir+'does-not-exist.pzl')
 
     def test_empty_file(self):
         with self.assertRaises(InputError) as err:
-            WordSearchPuzzle('empty.pzl')
+            WordSearchPuzzle(test_dir+'empty.pzl')
         self.assertEqual(
             'Empty file',
             str(err.exception)
@@ -100,7 +103,7 @@ class TestWordSearchPuzzle(unittest.TestCase):
 
     def test_new_lines_between_grids(self):
         with self.assertRaises(InputError) as err:
-            WordSearchPuzzle('new-lines-between-grids.pzl')
+            WordSearchPuzzle(test_dir+'new-lines-between-grids.pzl')
         self.assertEqual(
             'Failed to initialize puzzle: '
             'Unequal number of rows and columns',
@@ -125,7 +128,7 @@ class TestWordSearchPuzzle(unittest.TestCase):
 
     def test_grid_filled_with_non_alphabet_characters(self):
         with self.assertRaises(InputError) as err:
-            WordSearchPuzzle('symbols.pzl')
+            WordSearchPuzzle(test_dir+'symbols.pzl')
         self.assertEqual(
             'Text grid should only contain letters',
             str(err.exception)
@@ -133,7 +136,7 @@ class TestWordSearchPuzzle(unittest.TestCase):
 
     def test_unequal_number_of_rows_and_columns(self):
         with self.assertRaises(InputError) as err:
-            WordSearchPuzzle('unequal-grid.pzl')
+            WordSearchPuzzle(test_dir+'unequal-grid.pzl')
         self.assertEqual(
             'Failed to initialize puzzle: '
             'Unequal number of rows and columns',
@@ -152,7 +155,7 @@ class TestWordSearchPuzzle(unittest.TestCase):
 
     def test_text_grid_letters_mixed_case(self):
         with self.assertRaises(InputError) as err:
-            WordSearchPuzzle('mixed-case-text-grid.pzl')
+            WordSearchPuzzle(test_dir+'mixed-case-text-grid.pzl')
         self.assertEqual(
             'Text grid letters should be consistent '
             'uppercase or lowercase form',
